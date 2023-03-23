@@ -1,9 +1,10 @@
-import {useState} from 'react';
+import {useState, Fragment} from 'react';
 import axios from 'axios';
 import TextField from "@mui/material/TextField";
 import Button from "@mui/material/Button";
 import ResponseContainer from "./components/ResponseContainer";
 import LoadingIndicator from "./components/LoadingIndicator";
+
 
 import CardContent from '@mui/material/CardContent';
 import Container from "@mui/material/Container";
@@ -15,7 +16,7 @@ const CHAT_URI = `http://localhost:5000/chat`;
 
 function App() {
     const [input, setInput] = useState('');
-    const [output, setOutput] = useState('');
+    const [output, setOutput] = useState('Lampis');
     const [isLoading, setIsLoading] = useState(false)
 
     const initialStates = () => {
@@ -42,7 +43,7 @@ function App() {
 
 
     return (
-        <div>
+        <Fragment>
             <Container maxWidth="xl">
                 <CardComponent>
                     <CardContent>
@@ -50,29 +51,28 @@ function App() {
                             <TextField id="outlined-basic"
                                        label="Hey, how can I help you?"
                                        variant="outlined"
+                                       fullWidth
                                        value={input}
                                        onChange={handleInputChange}/>
-                            <Button
-                                style={{width: "100px"}}
-                                type="submit"
-                                fullWidth
-                                variant="contained"
-                                sx={{mt: 1, ml: 4}}
-                            >
-                                <PlayArrowIcon/>
-                            </Button>
                         </form>
-
+                        <Button
+                            style={{width: "100px"}}
+                            type="submit"
+                            fullWidth
+                            variant="contained"
+                            sx={{mt: 1}}
+                        >
+                            <PlayArrowIcon/>
+                        </Button>
+                        {output !== '' &&
+                            <ClearButton onClick={() => initialStates()}/>
+                        }
                     </CardContent>
-                    {output !== '' &&
-                        <ClearButton onClick={() => initialStates()}/>
-                    }
                 </CardComponent>
+                {isLoading && <LoadingIndicator/>}
+                {output && <ResponseContainer responses={output}/>}
             </Container>
-
-            {isLoading && <LoadingIndicator/>}
-            {output && <ResponseContainer responses={output}/>}
-        </div>
+        </Fragment>
     );
 }
 

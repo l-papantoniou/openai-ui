@@ -6,10 +6,10 @@ const CardComponent = ({children}) => {
             ml: 50,
             maxWidth: "sm",
             marginTop: 7,
+            mb: 2,
             display: "flex",
             flexDirection: "column",
             alignItems: "center",
-            color: "#fff",
             padding: "20px",
         }}>
             {children}

@@ -9,7 +9,7 @@ const ClearButton = ({onClick}) => {
             color="warning"
             variant="contained"
             onClick={onClick}
-            sx={{ml: 60}}
+            sx={{ml: 4, mt: 1}}
         >
             <RefreshIcon/>
         </Button>
