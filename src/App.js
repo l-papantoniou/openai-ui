@@ -1,50 +1,50 @@
 import {useState} from 'react';
 import axios from 'axios';
-import Box from "@mui/material/Box";
 import TextField from "@mui/material/TextField";
 import Button from "@mui/material/Button";
-import Card from '@mui/material/Card';
-import CardActions from '@mui/material/CardActions';
+import ResponseContainer from "./components/ResponseContainer";
+import LoadingIndicator from "./components/LoadingIndicator";
+
 import CardContent from '@mui/material/CardContent';
 import Container from "@mui/material/Container";
 import PlayArrowIcon from '@mui/icons-material/PlayArrow';
-import RefreshIcon from '@mui/icons-material/Refresh';
+import CardComponent from "./components/CardComponent";
+import ClearButton from "./components/ClearButton";
 
+const CHAT_URI = `http://localhost:5000/chat`;
 
 function App() {
     const [input, setInput] = useState('');
     const [output, setOutput] = useState('');
+    const [isLoading, setIsLoading] = useState(false)
+
+    const initialStates = () => {
+        setInput('')
+        setOutput('')
+    };
 
     const handleInputChange = event => {
         setInput(event.target.value);
     };
 
     const handleSubmit = async event => {
+        setIsLoading(true);
         event.preventDefault();
+        try {
+            const response = await axios.post(CHAT_URI);
+            setOutput(response.data);
 
-        const response = await axios.post(`http://localhost:5000/chat`);
-
-        setOutput(response.data);
+        } catch (error) {
+            console.error(error);
+        }
+        setIsLoading(false);
     };
 
-    const initialStates = () => {
-        setInput("")
-        setOutput("")
-    };
 
     return (
         <div>
             <Container maxWidth="xl">
-                <Card sx={{
-                    ml: 50,
-                    maxWidth: "sm",
-                    marginTop: 7,
-                    display: "flex",
-                    flexDirection: "column",
-                    alignItems: "center",
-                    color: "#fff",
-                    padding: "20px",
-                }}>
+                <CardComponent>
                     <CardContent>
                         <form onSubmit={handleSubmit}>
                             <TextField id="outlined-basic"
@@ -64,25 +64,16 @@ function App() {
                         </form>
 
                     </CardContent>
-                    //Clear Button
-                    <Button
-                        style={{width: "100px"}}
-                        fullWidth
-                        color="warning"
-                        variant="contained"
-                        onClick={() => initialStates()}
-                        sx={{ml: 60}}
-                    >
-                        <RefreshIcon/>
-                    </Button>
-                </Card>
+                    {output !== '' &&
+                        <ClearButton onClick={() => initialStates()}/>
+                    }
+                </CardComponent>
             </Container>
-            {
-                output && <div>{output}</div>
-            }
+
+            {isLoading && <LoadingIndicator/>}
+            {output && <ResponseContainer responses={output}/>}
         </div>
-    )
-        ;
+    );
 }
 
 export default App;
