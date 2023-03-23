@@ -8,9 +8,10 @@ const CardComponent = ({children}) => {
             marginTop: 7,
             mb: 2,
             display: "flex",
-            flexDirection: "column",
+            justifyContent: "center",
             alignItems: "center",
             padding: "20px",
+
         }}>
             {children}
         </Card>

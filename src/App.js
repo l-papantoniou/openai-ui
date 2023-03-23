@@ -41,6 +41,7 @@ function App() {
         setIsLoading(false);
     };
 
+    let x = 25;
 
     return (
         <Fragment>
@@ -49,24 +50,31 @@ function App() {
                     <CardContent>
                         <form onSubmit={handleSubmit}>
                             <TextField id="outlined-basic"
+                                       sx={{minWidth: 400}}
                                        label="Hey, how can I help you?"
                                        variant="outlined"
                                        fullWidth
                                        value={input}
                                        onChange={handleInputChange}/>
+
+                            <Button
+                                style={{
+                                    width: "100px"
+                                }}
+                                type="submit"
+                                fullWidth
+                                variant="contained"
+                                sx={{
+                                    mt: 1
+                                }}
+
+                            >
+                                <PlayArrowIcon/>
+                            </Button>
+                            {output !== '' &&
+                                <ClearButton onClick={() => initialStates()}/>
+                            }
                         </form>
-                        <Button
-                            style={{width: "100px"}}
-                            type="submit"
-                            fullWidth
-                            variant="contained"
-                            sx={{mt: 1}}
-                        >
-                            <PlayArrowIcon/>
-                        </Button>
-                        {output !== '' &&
-                            <ClearButton onClick={() => initialStates()}/>
-                        }
                     </CardContent>
                 </CardComponent>
                 {isLoading && <LoadingIndicator/>}
