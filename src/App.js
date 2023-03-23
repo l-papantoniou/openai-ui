@@ -8,6 +8,7 @@ import CardActions from '@mui/material/CardActions';
 import CardContent from '@mui/material/CardContent';
 import Container from "@mui/material/Container";
 import PlayArrowIcon from '@mui/icons-material/PlayArrow';
+import RefreshIcon from '@mui/icons-material/Refresh';
 
 
 function App() {
@@ -24,6 +25,11 @@ function App() {
         const response = await axios.post(`http://localhost:5000/chat`);
 
         setOutput(response.data);
+    };
+
+    const initialStates = () => {
+        setInput("")
+        setOutput("")
     };
 
     return (
@@ -56,7 +62,19 @@ function App() {
                                 <PlayArrowIcon/>
                             </Button>
                         </form>
+
                     </CardContent>
+                    //Clear Button
+                    <Button
+                        style={{width: "100px"}}
+                        fullWidth
+                        color="warning"
+                        variant="contained"
+                        onClick={() => initialStates()}
+                        sx={{ml: 60}}
+                    >
+                        <RefreshIcon/>
+                    </Button>
                 </Card>
             </Container>
             {
