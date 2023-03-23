@@ -3,6 +3,11 @@ import axios from 'axios';
 import Box from "@mui/material/Box";
 import TextField from "@mui/material/TextField";
 import Button from "@mui/material/Button";
+import Card from '@mui/material/Card';
+import CardActions from '@mui/material/CardActions';
+import CardContent from '@mui/material/CardContent';
+import Container from "@mui/material/Container";
+
 
 function App() {
     const [input, setInput] = useState('');
@@ -22,44 +27,43 @@ function App() {
 
     return (
         <div>
-            <Box disableGutters
-                 sx={{
-                     ml: 50,
-                     maxWidth: "sm",
-                     marginTop: 7,
-                     display: "flex",
-                     flexDirection: "column",
-                     alignItems: "center",
-                     backgroundColor: "rgba(0,0,0,.5)",
-                     color: "#fff",
-                     borderRadius: "0%",
-                     padding: "20px",
-                 }}>
-                <form onSubmit={handleSubmit}>
-                    <Box
-                        sx={{
-                            display: "flex",
-                            justifyContent: "space-evenly",
-                        }}
-                    >
-                        <TextField id="outlined-basic" label="Outlined" variant="filled" value={input}
-                                   onChange={handleInputChange}/>
-                        <Button
-                            style={{width: "100px"}}
-                            type="submit"
-                            fullWidth
-                            color="secondary"
-                            variant="contained"
-                            sx={{mt: 3, mb: 2}}
-                        >
-                            Submit
-                        </Button>
-                    </Box>
-                </form>
-            </Box>
-            {output && <div>{output}</div>}
+            <Container maxWidth="xl">
+                <Card sx={{
+                    ml: 50,
+                    maxWidth: "sm",
+                    marginTop: 7,
+                    display: "flex",
+                    flexDirection: "column",
+                    alignItems: "center",
+                    color: "#fff",
+                    padding: "20px",
+                }}>
+                    <CardContent>
+                        <form onSubmit={handleSubmit}>
+                            <TextField id="outlined-basic"
+                                       label="Outlined"
+                                       variant="outlined"
+                                       value={input}
+                                       onChange={handleInputChange}/>
+                            <Button
+                                style={{width: "100px"}}
+                                type="submit"
+                                fullWidth
+                                variant="contained"
+                                sx={{mt: 1, ml: 4}}
+                            >
+                                Submit
+                            </Button>
+                        </form>
+                    </CardContent>
+                </Card>
+            </Container>
+            {
+                output && <div>{output}</div>
+            }
         </div>
-    );
+    )
+        ;
 }
 
 export default App;
