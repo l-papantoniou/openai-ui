@@ -1,9 +1,13 @@
-import React from 'react';
-import { Button } from '@mui/material';
+import {Button} from '@mui/material';
 
-const SubmitButton = ({ onClick, label }) => {
+const SubmitButton = ({onClick, label}) => {
     return (
-        <Button variant="contained" color="primary" onClick={onClick}>
+        <Button
+            style={{width: "100px"}}
+            type="submit"
+            fullWidth
+            sx={{mt: 1, ml: 4}}
+            variant="contained" color="primary" onClick={onClick}>
             {label}
         </Button>
     );

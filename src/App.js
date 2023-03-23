@@ -1,7 +1,6 @@
-import {useState, Fragment} from 'react';
+import {Fragment, useState} from 'react';
 import axios from 'axios';
 import TextField from "@mui/material/TextField";
-import Button from "@mui/material/Button";
 import ResponseContainer from "./components/ResponseContainer";
 import LoadingIndicator from "./components/LoadingIndicator";
 
@@ -11,12 +10,13 @@ import Container from "@mui/material/Container";
 import PlayArrowIcon from '@mui/icons-material/PlayArrow';
 import CardComponent from "./components/CardComponent";
 import ClearButton from "./components/ClearButton";
+import SubmitButton from "./components/SubmitButton";
 
-const CHAT_URI = `http://localhost:5000/chat`;
+const CHAT_URI = 'http://localhost:5000/chat'
 
-function App() {
+const App = () => {
     const [input, setInput] = useState('');
-    const [output, setOutput] = useState('Lampis');
+    const [output, setOutput] = useState('');
     const [isLoading, setIsLoading] = useState(false)
 
     const initialStates = () => {
@@ -55,15 +55,7 @@ function App() {
                                        value={input}
                                        onChange={handleInputChange}/>
                         </form>
-                        <Button
-                            style={{width: "100px"}}
-                            type="submit"
-                            fullWidth
-                            variant="contained"
-                            sx={{mt: 1}}
-                        >
-                            <PlayArrowIcon/>
-                        </Button>
+                        <SubmitButton onClick={handleSubmit} label={<PlayArrowIcon/>}/>
                         {output !== '' &&
                             <ClearButton onClick={() => initialStates()}/>
                         }
