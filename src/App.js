@@ -7,6 +7,7 @@ import Card from '@mui/material/Card';
 import CardActions from '@mui/material/CardActions';
 import CardContent from '@mui/material/CardContent';
 import Container from "@mui/material/Container";
+import PlayArrowIcon from '@mui/icons-material/PlayArrow';
 
 
 function App() {
@@ -41,7 +42,7 @@ function App() {
                     <CardContent>
                         <form onSubmit={handleSubmit}>
                             <TextField id="outlined-basic"
-                                       label="Outlined"
+                                       label="Hey, how can I help you?"
                                        variant="outlined"
                                        value={input}
                                        onChange={handleInputChange}/>
@@ -52,7 +53,7 @@ function App() {
                                 variant="contained"
                                 sx={{mt: 1, ml: 4}}
                             >
-                                Submit
+                                <PlayArrowIcon/>
                             </Button>
                         </form>
                     </CardContent>
