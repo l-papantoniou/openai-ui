@@ -10,10 +10,16 @@ import SpeedIcon from '@mui/icons-material/Speed';
 import CardComponent from "./components/CardComponent";
 import ClearButton from "./components/ClearButton";
 import SubmitButton from "./components/SubmitButton";
+import CustomSelect from "./components/CustomSelect";
+import {islandsOptions} from "./constants/IslandsOptions";
+import {transportationOptions} from "./constants/TransportationOptions";
+import DarkMode from "./components/DarkMode";
+import {NavBar} from "./components/NavBar";
 
 
 const CHAT_URI = 'http://localhost:5000/chat'
 const EVALUATION_URI = 'http://localhost:5000/evaluate';
+
 
 const App = () => {
     const [input, setInput] = useState('');
@@ -21,6 +27,17 @@ const App = () => {
     const [evaluation, setEvaluation] = useState('')
     const [isLoadingChat, setIsLoadingChat] = useState(false)
     const [isLoadingEval, setIsLoadingEval] = useState(false)
+    const [island, setIsland] = useState(islandsOptions[0].value);
+    const [transportation, setTransportation] = useState(transportationOptions[0].value);
+
+    const handleIslandChange = (value) => {
+        setIsland(value);
+        console.log(value)
+    };
+
+    const handleTransportationChange = (value) => {
+        setTransportation(value);
+    };
 
     const initialStates = () => {
         setInput('')
@@ -33,11 +50,10 @@ const App = () => {
     };
 
     const handleSubmit = async event => {
-        initialStates();
         setIsLoadingChat(true);
         event.preventDefault();
         try {
-            await axios.post(CHAT_URI, {input}).then((response) => {
+            await axios.post(CHAT_URI, {island, input}).then((response) => {
                     setOutput(response.data);
                 }
             )
@@ -51,7 +67,7 @@ const App = () => {
         setIsLoadingEval(true);
         event.preventDefault();
         try {
-            const response = await axios.post(EVALUATION_URI, {output});
+            const response = await axios.post(EVALUATION_URI, {output, transportation});
             setEvaluation(response.data);
 
         } catch (error) {
@@ -62,7 +78,24 @@ const App = () => {
 
     return (
         <Fragment>
+            <NavBar/>
             <Container maxWidth="xl">
+                <CardComponent>
+                    <CardContent>
+                        <CustomSelect
+                            label="Destination"
+                            options={islandsOptions}
+                            value={island}
+                            onChange={handleIslandChange}
+                        />
+                        <CustomSelect
+                            label="Transportation"
+                            options={transportationOptions}
+                            value={transportation}
+                            onChange={handleTransportationChange}
+                        />
+                    </CardContent>
+                </CardComponent>
                 <CardComponent>
                     <CardContent>
                         <form onSubmit={handleSubmit}>
@@ -91,7 +124,8 @@ const App = () => {
                 }
             </Container>
         </Fragment>
-    );
+    )
+        ;
 }
 
 export default App;
