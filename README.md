@@ -1,5 +1,5 @@
-# openai-ui
-openai-demo sample UI page
+# Openai-ui
+This is a repository that store a React app, that will be used for the external impelementation of openai-ui
 
 # Getting Started with Create React App
 
