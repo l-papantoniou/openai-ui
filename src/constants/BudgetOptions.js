@@ -3,5 +3,5 @@ export const budgetOptions = [
     {label: 'Low-budget', value: 'low'},
     {label: 'Medium-budget', value: 'medium'},
     {label: 'High-budget', value: 'high'},
-    {label: 'Unlimited-budget', value: 'unlimited'},
+    {label: 'Unlimited', value: 'unlimited'},
 ];
