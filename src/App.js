@@ -13,8 +13,9 @@ import SubmitButton from "./components/SubmitButton";
 import CustomSelect from "./components/CustomSelect";
 import {islandsOptions} from "./constants/IslandsOptions";
 import {transportationOptions} from "./constants/TransportationOptions";
-import DarkMode from "./components/DarkMode";
 import {NavBar} from "./components/NavBar";
+import {budgetOptions} from "./constants/BudgetOptions";
+import {seasonOptions} from "./constants/SeasonOptions";
 
 
 const CHAT_URI = 'http://localhost:5000/chat'
@@ -29,14 +30,24 @@ const App = () => {
     const [isLoadingEval, setIsLoadingEval] = useState(false)
     const [island, setIsland] = useState(islandsOptions[0].value);
     const [transportation, setTransportation] = useState(transportationOptions[0].value);
+    const [budgetOption, setBudgetOption] = useState(budgetOptions[0].value);
+    const [season, setSeason] = useState(seasonOptions[0].value);
 
     const handleIslandChange = (value) => {
         setIsland(value);
-        console.log(value)
     };
 
     const handleTransportationChange = (value) => {
         setTransportation(value);
+    };
+
+    const handleSeasonChange = (value) => {
+        setSeason(value);
+    };
+
+    const handleBudgetOption = (value) => {
+        setBudgetOption(value);
+        console.log(value)
     };
 
     const initialStates = () => {
@@ -53,7 +64,7 @@ const App = () => {
         setIsLoadingChat(true);
         event.preventDefault();
         try {
-            await axios.post(CHAT_URI, {island, input}).then((response) => {
+            await axios.post(CHAT_URI, {island, transportation, season, budgetOption, input}).then((response) => {
                     setOutput(response.data);
                 }
             )
@@ -67,8 +78,8 @@ const App = () => {
         setIsLoadingEval(true);
         event.preventDefault();
         try {
-            const response = await axios.post(EVALUATION_URI, {output, transportation});
-            setEvaluation(response.data);
+            const response = await axios.post(EVALUATION_URI, {output, budgetOption, input, transportation});
+            setEvaluation(response.data)
 
         } catch (error) {
             console.error(error);
@@ -93,6 +104,18 @@ const App = () => {
                             options={transportationOptions}
                             value={transportation}
                             onChange={handleTransportationChange}
+                        />
+                        <CustomSelect
+                            label="Season"
+                            options={seasonOptions}
+                            value={season}
+                            onChange={handleSeasonChange}
+                        />
+                        <CustomSelect
+                            label="Budget"
+                            options={budgetOptions}
+                            value={budgetOption}
+                            onChange={handleBudgetOption}
                         />
                     </CardContent>
                 </CardComponent>
