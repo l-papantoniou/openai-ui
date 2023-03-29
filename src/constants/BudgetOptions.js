@@ -1,4 +1,4 @@
-export const budgetOptions = [
+export const BudgetOptions = [
     {label: 'Very-low budget', value: 'very-low'},
     {label: 'Low-budget', value: 'low'},
     {label: 'Medium-budget', value: 'medium'},

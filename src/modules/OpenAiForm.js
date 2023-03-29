@@ -11,18 +11,16 @@ import CardComponent from "../components/CardComponent";
 import ClearButton from "../components/ClearButton";
 import SubmitButton from "../components/SubmitButton";
 import CustomSelect from "../components/CustomSelect";
-import {islandsOptions} from "../constants/IslandsOptions";
-import {transportationOptions} from "../constants/TransportationOptions";
+import {DestinationOptions} from "../constants/DestinationOptions";
+import {TransportationOptions} from "../constants/TransportationOptions";
 import {NavBar} from "../components/NavBar";
-import {budgetOptions} from "../constants/BudgetOptions";
-import {seasonOptions} from "../constants/SeasonOptions";
 import {
-    handleBudgetOption, handleInputChange,
-    handleIslandChange,
-    handleSeasonChange,
-    handleTransportationChange
+    handleInputChange,
+    handleIslandChange, handleLanguageOptions,
+    handleTravelerOptions
 } from "../service/handlers";
-import {Grid} from "@mui/material";
+import {TravelerOptions} from "../constants/TravelerOptions";
+import {LanguageOptions} from "../constants/LanguageOptions";
 
 
 const CHAT_URI = 'http://localhost:5000/chat'
@@ -35,10 +33,10 @@ const OpenAiForm = () => {
     const [evaluation, setEvaluation] = useState('')
     const [isLoadingChat, setIsLoadingChat] = useState(false)
     const [isLoadingEval, setIsLoadingEval] = useState(false)
-    const [island, setIsland] = useState(islandsOptions[0].value);
-    const [transportation, setTransportation] = useState(transportationOptions[0].value);
-    const [budgetOption, setBudgetOption] = useState(budgetOptions[0].value);
-    const [season, setSeason] = useState(seasonOptions[0].value);
+    const [destination, setDestination] = useState(DestinationOptions[0].value);
+    const [transportation, setTransportation] = useState(TransportationOptions[0].value);
+    const [travelers, setTravelers] = useState(TravelerOptions[0].value);
+    const [language, setLanguage] = useState(LanguageOptions[0].value);
 
 
     const initialStates = () => {
@@ -52,7 +50,7 @@ const OpenAiForm = () => {
         setIsLoadingChat(true);
         event.preventDefault();
         try {
-            await axios.post(CHAT_URI, {island, transportation, season, budgetOption, input}).then((response) => {
+            await axios.post(CHAT_URI, {destination, travelers,}).then((response) => {
                     setOutput(response.data);
                 }
             )
@@ -66,7 +64,7 @@ const OpenAiForm = () => {
         setIsLoadingEval(true);
         event.preventDefault();
         try {
-            const response = await axios.post(EVALUATION_URI, {output, budgetOption, input, transportation});
+            const response = await axios.post(EVALUATION_URI, {output, input, transportation});
             setEvaluation(response.data)
 
         } catch (error) {
@@ -83,27 +81,21 @@ const OpenAiForm = () => {
                     <CardContent>
                         <CustomSelect
                             label="Destination"
-                            options={islandsOptions}
-                            value={island}
-                            onChange={e => handleIslandChange(e, setIsland, island)}
+                            options={DestinationOptions}
+                            value={destination}
+                            onChange={e => handleIslandChange(e, setDestination, destination)}
                         />
                         <CustomSelect
-                            label="Transportation"
-                            options={transportationOptions}
-                            value={transportation}
-                            onChange={e => handleTransportationChange(e, setTransportation, transportation)}
+                            label="Travelers"
+                            options={TravelerOptions}
+                            value={travelers}
+                            onChange={e => handleTravelerOptions(e, setTravelers, travelers)}
                         />
                         <CustomSelect
-                            label="Season"
-                            options={seasonOptions}
-                            value={season}
-                            onChange={e => handleSeasonChange(e, setSeason, season)}
-                        />
-                        <CustomSelect
-                            label="Budget"
-                            options={budgetOptions}
-                            value={budgetOption}
-                            onChange={e => handleBudgetOption(e, setBudgetOption, budgetOption)}
+                            label="Language"
+                            options={LanguageOptions}
+                            value={language}
+                            onChange={e => handleLanguageOptions(e, setLanguage, language)}
                         />
                     </CardContent>
                 </CardComponent>

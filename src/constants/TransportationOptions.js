@@ -1,4 +1,4 @@
-export const transportationOptions = [
+export const TransportationOptions = [
     {label: 'Car', value: 'car'},
     {label: 'Bus', value: 'bus'},
     {label: 'Bike', value: 'bike'},

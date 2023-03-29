@@ -14,8 +14,7 @@ export const NavBar = () => {
                         <Typography textAlign='center' variant="h6" component="div" sx={{flexGrow: 1}}>
                             Travel-GTP By PapGk
                         </Typography>
-                        <DarkMode />
-
+                        <DarkMode/>
                     </Toolbar>
                 </Container>
             </AppBar>
