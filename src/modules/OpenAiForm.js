@@ -14,6 +14,7 @@ import CustomSelect from "../components/CustomSelect";
 import {DestinationOptions} from "../constants/DestinationOptions";
 import {TransportationOptions} from "../constants/TransportationOptions";
 import {NavBar} from "../components/NavBar";
+
 import {
     handleInputChange,
     handleIslandChange, handleLanguageOptions,
@@ -21,6 +22,7 @@ import {
 } from "../service/handlers";
 import {TravelerOptions} from "../constants/TravelerOptions";
 import {LanguageOptions} from "../constants/LanguageOptions";
+import {DesktopDatePicker} from "@mui/x-date-pickers/DesktopDatePicker";
 
 
 const CHAT_URI = 'http://localhost:5000/chat'
@@ -91,6 +93,30 @@ const OpenAiForm = () => {
                             value={travelers}
                             onChange={e => handleTravelerOptions(e, setTravelers, travelers)}
                         />
+                        <DesktopDatePicker
+                            label='Start'
+                            inputFormat="MM/DD/YYYY"
+                            renderInput={(params) => <TextField {...params} />}
+                            slotProps={{
+                                textField: {
+                                    variant: 'standard',
+                                    InputLabelProps: {shrink: true},
+                                    sx: {maxWidth: 120, mr: 1, mt:1}
+                                }
+                            }}
+                        />
+                        <DesktopDatePicker
+                            label='End'
+                            inputFormat="MM/DD/YYYY"
+                            renderInput={(params) => <TextField {...params} />}
+                            slotProps={{
+                            textField: {
+                                variant: 'standard',
+                                InputLabelProps: {shrink: true},
+                                sx: {maxWidth: 120, mr: 1, mt:1}
+                            }
+                        }}
+                            />
                         <CustomSelect
                             label="Language"
                             options={LanguageOptions}
